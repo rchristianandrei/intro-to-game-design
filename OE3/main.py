@@ -27,8 +27,18 @@ def main():
 
         keys = pygame.key.get_pressed()
 
-        object1.moving = [keys[pygame.K_UP], keys[pygame.K_DOWN], keys[pygame.K_LEFT], keys[pygame.K_RIGHT]]
-        object2.moving = [keys[pygame.K_w], keys[pygame.K_s], keys[pygame.K_a], keys[pygame.K_d]]
+        object1.moving = [
+            keys[pygame.K_UP],
+            keys[pygame.K_DOWN],
+            keys[pygame.K_LEFT],
+            keys[pygame.K_RIGHT],
+            keys[pygame.K_KP_0]]
+        object2.moving = [
+            keys[pygame.K_w],
+            keys[pygame.K_s],
+            keys[pygame.K_a],
+            keys[pygame.K_d],
+            keys[pygame.K_SPACE]]
 
         # Move Objects
         object1.move()
