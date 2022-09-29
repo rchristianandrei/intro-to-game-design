@@ -2,24 +2,13 @@ import pygame
 from object import Object
 
 
-def move_shape(key, cond, speed):
-    if key and cond:
-        return speed
-    return 0
-
-
-def east_bound(x, w, width):
-    return x < width - (w + 10)
-
-
-def south_bound(y, h, height):
-    return y < height - (h + 10)
-
-
 def main():
     pygame.init()
 
     width, height = 800, 600
+
+    Object.height = height
+    Object.width = width
 
     window = pygame.display.set_mode((800, 600))
     playing = True
@@ -28,8 +17,6 @@ def main():
 
     object1 = Object(415, 275, 50, 50, (255, 255, 0))
     object2 = Object(335, 275, 50, 50, (0, 255, 0))
-
-    north_bound, west_bound = 10, 10
 
     while playing:
         window.fill((0, 0, 0))
@@ -40,17 +27,12 @@ def main():
 
         keys = pygame.key.get_pressed()
 
+        object1.moving = [keys[pygame.K_UP], keys[pygame.K_DOWN], keys[pygame.K_LEFT], keys[pygame.K_RIGHT]]
+        object2.moving = [keys[pygame.K_w], keys[pygame.K_s], keys[pygame.K_a], keys[pygame.K_d]]
+
         # Move Objects
-
-        object1.x += move_shape(keys[pygame.K_LEFT], object1.x > west_bound, -Object.speed)
-        object1.x += move_shape(keys[pygame.K_RIGHT], east_bound(object1.x, object1.w, width), Object.speed)
-        object1.y += move_shape(keys[pygame.K_UP], object1.y > north_bound, -Object.speed)
-        object1.y += move_shape(keys[pygame.K_DOWN], south_bound(object1.y, object1.h, height), Object.speed)
-
-        object2.x += move_shape(keys[pygame.K_a], object2.x > west_bound, -Object.speed)
-        object2.x += move_shape(keys[pygame.K_d], east_bound(object2.x, object2.w, width), Object.speed)
-        object2.y += move_shape(keys[pygame.K_w], object2.y > north_bound, -Object.speed)
-        object2.y += move_shape(keys[pygame.K_s], south_bound(object2.y, object2.h, height), Object.speed)
+        object1.move()
+        object2.move()
 
         # Draw Objects
         pygame.draw.rect(window, object1.color, (object1.x, object1.y, object1.w, object1.h))
