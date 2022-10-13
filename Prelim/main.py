@@ -3,6 +3,7 @@ from object import Object
 
 
 def main():
+    # Window Settings
     pygame.init()
 
     width, height = 800, 600
@@ -15,6 +16,10 @@ def main():
 
     pygame.display.set_caption("First Pygame")
 
+    load = pygame.image.load
+    background = load("../images/bg.jpg")
+    background = pygame.transform.scale(background, (1278, 720))
+
     # Clock
     clock = pygame.time.Clock()
 
@@ -22,35 +27,25 @@ def main():
     object1 = Object(415, 275)
     object1.idle_scale = (77, 146)
     object1.run_scale = (110, 146)
+    object1.jump_scale = (110, 170)
     object1.w = 77
     object1.h = 146
 
     # Assign Sprite Settings
-    load = pygame.image.load
-    object1.IDLE = [load('../images/object1/Idle/Idle__000.png'),
-                    load('../images/object1/Idle/Idle__001.png'),
-                    load('../images/object1/Idle/Idle__002.png'),
-                    load('../images/object1/Idle/Idle__003.png'),
-                    load('../images/object1/Idle/Idle__004.png'),
-                    load('../images/object1/Idle/Idle__005.png'),
-                    load('../images/object1/Idle/Idle__006.png'),
-                    load('../images/object1/Idle/Idle__007.png'),
-                    load('../images/object1/Idle/Idle__008.png'),
-                    load('../images/object1/Idle/Idle__009.png')]
-    object1.RUN = [load('../images/object1/Run/Run__000.png'),
-                   load('../images/object1/Run/Run__001.png'),
-                   load('../images/object1/Run/Run__002.png'),
-                   load('../images/object1/Run/Run__003.png'),
-                   load('../images/object1/Run/Run__004.png'),
-                   load('../images/object1/Run/Run__005.png'),
-                   load('../images/object1/Run/Run__006.png'),
-                   load('../images/object1/Run/Run__007.png'),
-                   load('../images/object1/Run/Run__008.png'),
-                   load('../images/object1/Run/Run__009.png')]
+    for x in range(10):
+        object1.IDLE.append(load(f'../images/object1/Idle/Idle__00{x}.png'))
+
+    for x in range(10):
+        object1.RUN.append(load(f'../images/object1/Run/Run__00{x}.png'))
+
+    for x in range(10):
+        object1.JUMP.append(load(f'../images/object1/Jump/Jump__00{x}.png'))
+
     object1.resize_sprites()
 
     while playing:
         window.fill((0, 0, 0))
+        window.blit(background, (-239, -60))
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -64,8 +59,7 @@ def main():
             keys[pygame.K_s],
             keys[pygame.K_a],
             keys[pygame.K_d],
-            keys[pygame.K_SPACE]
-        ]
+            keys[pygame.K_SPACE]]
 
         # Move Objects
         object1.move()

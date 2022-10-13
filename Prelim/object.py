@@ -4,7 +4,7 @@ import pygame
 
 class Object:
     speed = 4
-    jump_force = -150
+    jump_force = -100
     north_bound, west_bound = 10, 10
     width = None
     height = None
@@ -34,10 +34,16 @@ class Object:
         self.jump_count = 0
 
         # Sprites
-        self.IDLE = None
+        self.IDLE = []
         self.idle_scale = None
-        self.RUN = None
+
+        self.RUN = []
         self.run_scale = None
+
+        self.JUMP = []
+        self.jump_scale = None
+        self.jump_counter = 0
+
         self.active_sprite = None
         self.flip = None
         self.counter = 0
@@ -62,14 +68,22 @@ class Object:
         else:
             self.do_jump()
 
+        if self.moving[3]:
+            self.flip = False
+        elif self.moving[2]:
+            self.flip = True
+
         self.x += Object.move_shape(self.moving[2], self.x > Object.west_bound, -Object.speed)
         self.x += Object.move_shape(self.moving[3], Object.east_bound(self.x, self.w, Object.width), Object.speed)
 
-        if not (self.moving[0]) and not (self.moving[1]) and not (self.moving[2]) \
-                and not (self.moving[3]):
-            self.idle_animation()
+        if not self.jump:
+            if not (self.moving[0]) and not (self.moving[1]) and not (self.moving[2]) \
+                    and not (self.moving[3]):
+                self.idle_animation()
+            else:
+                self.walk_animation()
         else:
-            self.walk_animation()
+            self.jump_animation()
 
     def do_jump(self):
         target = None
@@ -93,6 +107,11 @@ class Object:
             else:
                 self.jump = self.down = False
                 self.old_y = None
+                self.jump_counter = 0
+
+                # Check if passed south bound
+                if not Object.south_bound(self.y, self.h, Object.height):
+                    self.y = Object.height - (self.h + 10)
 
     def resize_sprites(self):
         for x in range(len(self.IDLE)):
@@ -100,6 +119,9 @@ class Object:
 
         for x in range(len(self.RUN)):
             self.RUN[x] = pygame.transform.scale(self.RUN[x], self.run_scale)
+
+        for x in range(len(self.JUMP)):
+            self.JUMP[x] = pygame.transform.scale(self.JUMP[x], self.jump_scale)
 
     def update_counter(self):
         if Object.counter % 3 == 0:
@@ -125,11 +147,27 @@ class Object:
 
         if self.moving[2]:
             temp = pygame.transform.flip(self.RUN[self.counter], True, False)
-            self.flip = True
         else:
-            self.flip = False
             temp = self.RUN[self.counter]
 
         self.w = self.run_scale[0]
         self.h = self.run_scale[1]
+        self.active_sprite = temp
+
+    def jump_animation(self):
+        if Object.counter % 6 == 0:
+            self.jump_counter += 1
+
+        if self.jump_counter > 9:
+            self.jump_counter = 0
+
+        temp = None
+
+        if self.flip:
+            temp = pygame.transform.flip(self.JUMP[self.jump_counter], True, False)
+        else:
+            temp = self.JUMP[self.jump_counter]
+
+        self.w = self.jump_scale[0]
+        self.h = self.idle_scale[1]
         self.active_sprite = temp
