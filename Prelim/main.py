@@ -19,12 +19,14 @@ def main():
     clock = pygame.time.Clock()
 
     # Initialize Objects
-    object1 = Object(415, 275, Object.scale[0], Object.scale[1], (255, 255, 0))
-    #object2 = Object(335, 275, 50, 50, (0, 255, 0))
-
-    load = pygame.image.load
+    object1 = Object(415, 275)
+    object1.idle_scale = (77, 146)
+    object1.run_scale = (110, 146)
+    object1.w = 77
+    object1.h = 146
 
     # Assign Sprite Settings
+    load = pygame.image.load
     object1.IDLE = [load('../images/object1/Idle/Idle__000.png'),
                     load('../images/object1/Idle/Idle__001.png'),
                     load('../images/object1/Idle/Idle__002.png'),
@@ -45,12 +47,7 @@ def main():
                    load('../images/object1/Run/Run__007.png'),
                    load('../images/object1/Run/Run__008.png'),
                    load('../images/object1/Run/Run__009.png')]
-
-    for x in range(len(object1.IDLE)):
-        object1.IDLE[x] = pygame.transform.scale(object1.IDLE[x], (77, 146))
-
-    for x in range(len(object1.RUN)):
-        object1.RUN[x] = pygame.transform.scale(object1.RUN[x], (110, 146))
+    object1.resize_sprites()
 
     while playing:
         window.fill((0, 0, 0))
@@ -69,27 +66,18 @@ def main():
             keys[pygame.K_d],
             keys[pygame.K_SPACE]
         ]
-        '''object2.moving = [
-            keys[pygame.K_UP],
-            keys[pygame.K_DOWN],
-            keys[pygame.K_LEFT],
-            keys[pygame.K_RIGHT],
-            keys[pygame.K_KP_0]]'''
 
         # Move Objects
         object1.move()
-        #object2.move()
 
         # Draw Objects
-        #pygame.draw.rect(window, object1.color, (object1.x, object1.y, object1.w, object1.h))
-        #pygame.draw.rect(window, object2.color, (object2.x, object2.y, object2.w, object2.h))
-
         window.blit(object1.active_sprite, (object1.x, object1.y, object1.w, object1.h))
 
+        # Update
         pygame.display.update()
         clock.tick(60)
         Object.counter += 1
-        if Object.counter > 9:
+        if Object.counter > 999:
             Object.counter = 0
 
     pygame.quit()
