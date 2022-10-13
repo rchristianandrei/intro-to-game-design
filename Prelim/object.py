@@ -1,13 +1,15 @@
 import copy
-
+import pygame
 
 class Object:
 
-    speed = 0.3
+    speed = 4
     jump_force = -150
     north_bound, west_bound = 10, 10
     width = None
     height = None
+    scale = (77, 146)
+    counter = 1
 
     @staticmethod
     def move_shape(key, cond, speed):
@@ -35,6 +37,12 @@ class Object:
         self.old_y = None
         self.jump_count = 0
 
+        self.IDLE = None
+        self.RUN = None
+        self.scale = None
+        self.active_sprite = None
+        self.flip = None
+
     def move(self):
         if not self.jump:
             if self.moving[4]:
@@ -49,6 +57,11 @@ class Object:
 
         self.x += Object.move_shape(self.moving[2], self.x > Object.west_bound, -Object.speed)
         self.x += Object.move_shape(self.moving[3], Object.east_bound(self.x, self.w, Object.width), Object.speed)
+
+        if not(self.moving[0]) and not(self.moving[1]) and not(self.moving[2]) and not(self.moving[3]) and not(self.moving[4]):
+            self.idle_animation()
+        else:
+            self.walk_animation()
 
     def do_jump(self):
 
@@ -73,3 +86,29 @@ class Object:
             else:
                 self.jump = self.down = False
                 self.old_y = None
+
+    def idle_animation(self):
+        temp = None
+
+        if self.flip:
+            temp = pygame.transform.flip(self.IDLE[Object.counter], True, False)
+        else:
+            temp = self.IDLE[Object.counter]
+
+        self.active_sprite = temp
+
+
+    def walk_animation(self):
+        temp = None
+
+        if self.moving[2]:
+            temp = pygame.transform.flip(self.RUN[Object.counter], True, False)
+            self.flip = True
+        else:
+            self.flip = False
+            temp = self.RUN[Object.counter]
+
+        self.active_sprite = temp
+
+
+
