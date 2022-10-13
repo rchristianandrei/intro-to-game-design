@@ -88,30 +88,36 @@ class Object:
     def do_jump(self):
         target = None
 
+        # Check if empty
         if self.old_y is None:
             self.old_y = copy.deepcopy(self.y)
 
+        # Check if can jump normally
         if (self.old_y + Object.jump_force) < Object.north_bound:
             target = Object.north_bound
         else:
             target = self.old_y + Object.jump_force
 
+        # Check if reached peak
         if (self.y >= target) and not self.down:
-            if self.y > Object.north_bound:
-                self.y -= Object.speed
+            self.y -= Object.speed
         else:
             self.down = True
 
             if self.y <= self.old_y:
                 self.y += Object.speed
             else:
-                self.jump = self.down = False
-                self.old_y = None
-                self.jump_counter = 0
+                # Check if returned to old y
+                if self.y > self.old_y:
+                    self.y = self.old_y
 
                 # Check if passed south bound
                 if not Object.south_bound(self.y, self.h, Object.height):
                     self.y = Object.height - (self.h + 10)
+
+                self.jump = self.down = False
+                self.old_y = None
+                self.jump_counter = 0
 
     def resize_sprites(self):
         for x in range(len(self.IDLE)):
