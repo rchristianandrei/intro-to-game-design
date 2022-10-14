@@ -86,8 +86,6 @@ class Object:
             self.jump_animation()
 
     def do_jump(self):
-        target = None
-
         # Check if empty
         if self.old_y is None:
             self.old_y = copy.deepcopy(self.y)
@@ -133,8 +131,6 @@ class Object:
             self.counter = 0
 
     def idle_animation(self):
-        temp = None
-
         if self.flip:
             temp = pygame.transform.flip(self.IDLE[self.counter], True, False)
         else:
@@ -145,8 +141,6 @@ class Object:
         self.active_sprite = temp
 
     def walk_animation(self):
-        temp = None
-
         if self.moving[2]:
             temp = pygame.transform.flip(self.RUN[self.counter], True, False)
         else:
@@ -162,8 +156,6 @@ class Object:
 
         if self.jump_counter > 9:
             self.jump_counter = 0
-
-        temp = None
 
         if self.flip:
             temp = pygame.transform.flip(self.JUMP[self.jump_counter], True, False)
