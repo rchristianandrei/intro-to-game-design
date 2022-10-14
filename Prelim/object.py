@@ -120,13 +120,9 @@ class Object:
                 self.jump_counter = 0
 
     def resize_sprites(self):
-        for x in range(len(self.IDLE)):
+        for x in range(10):
             self.IDLE[x] = pygame.transform.scale(self.IDLE[x], self.idle_scale)
-
-        for x in range(len(self.RUN)):
             self.RUN[x] = pygame.transform.scale(self.RUN[x], self.run_scale)
-
-        for x in range(len(self.JUMP)):
             self.JUMP[x] = pygame.transform.scale(self.JUMP[x], self.jump_scale)
 
     def update_counter(self):
