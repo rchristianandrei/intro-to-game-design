@@ -40,31 +40,22 @@ def main():
 
     # Assign Sprite Settings
     for x in range(10):
+        # Object1
         object1.IDLE.append(load(f'../images/object1/Idle/Idle__00{x}.png'))
-
-    for x in range(10):
         object1.RUN.append(load(f'../images/object1/Run/Run__00{x}.png'))
-
-    for x in range(10):
         object1.JUMP.append(load(f'../images/object1/Jump/Jump__00{x}.png'))
 
+        # Object2
+        object2.IDLE.append(load(f'../images/object2/Idle/Idle ({x + 1}).png'))
+        object2.RUN.append(load(f'../images/object2/Run/Run ({x + 1}).png'))
+        object2.JUMP.append(load(f'../images/object2/Jump/Jump ({x + 1}).png'))
+
+    # Resize the sprites
     object1.resize_sprites()
-
-    for x in range(10):
-        object2.IDLE.append(load(f'../images/object2/Idle/Idle ({x+1}).png'))
-
-    for x in range(10):
-        object2.RUN.append(load(f'../images/object2/Run/Run ({x+1}).png'))
-
-    for x in range(10):
-        object2.JUMP.append(load(f'../images/object2/Jump/Jump ({x+1}).png'))
-
     object2.resize_sprites()
 
+    # Game Loop
     while playing:
-        window.fill((0, 0, 0))
-        window.blit(background, (-239, -60))
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 playing = False
@@ -90,6 +81,7 @@ def main():
         object2.move()
 
         # Draw Objects
+        window.blit(background, (-239, -60))
         window.blit(object1.active_sprite, (object1.x, object1.y, object1.w, object1.h))
         window.blit(object2.active_sprite, (object2.x, object2.y, object2.w, object2.h))
 
