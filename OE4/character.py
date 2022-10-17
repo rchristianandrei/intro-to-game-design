@@ -116,7 +116,7 @@ class Character(Object):
         self.active_sprite = temp
 
     def walk_animation(self):
-        if self.moving[2]:
+        if self.flip:
             temp = pygame.transform.flip(self.RUN[self.counter], True, False)
         else:
             temp = self.RUN[self.counter]
