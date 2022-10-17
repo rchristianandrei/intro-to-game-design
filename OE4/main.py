@@ -1,5 +1,6 @@
 import pygame
 from object import Object
+from character import Character
 
 # Window Settings
 pygame.init()
@@ -22,19 +23,15 @@ background = pygame.transform.scale(background, (1278, 720))
 clock = pygame.time.Clock()
 
 # Initialize Objects
-objects = [Object(415, 275), Object(415, 275)]
+objects = [Character(415, 275, 77, 146), Character(415, 275, 117, 141)]
 
 objects[0].idle_scale = (77, 146)
 objects[0].run_scale = (110, 146)
 objects[0].jump_scale = (110, 170)
-objects[0].w = 77
-objects[0].h = 146
 
 objects[1].idle_scale = (117, 141)
 objects[1].run_scale = (110, 146)
 objects[1].jump_scale = (110, 140)
-objects[1].w = 117
-objects[1].h = 141
 
 # Assign Sprite Settings
 for x in range(10):
