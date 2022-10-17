@@ -18,7 +18,7 @@ class Ninja(Character):
         self.update_counter()
 
         # Moves
-        if self.moving[5] and not self.jump:
+        if self.moving[5] and not self.jump and self.kunai.available:
             self.throw_kunai()
             self.throwing = True
 
