@@ -32,4 +32,5 @@ class Object:
         self.y = y
         self.w = w
         self.h = h
+        self.flip = None
 

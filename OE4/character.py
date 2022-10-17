@@ -27,7 +27,6 @@ class Character(Object):
         self.jump_counter = 0
 
         self.active_sprite = None
-        self.flip = None
         self.counter = 0
 
     def move(self):
@@ -66,7 +65,7 @@ class Character(Object):
         if self.old_y is None:
             self.old_y = copy.deepcopy(self.y)
 
-        # Check if can jump normally
+        # Check if character can jump normally
         if (self.old_y + Object.jump_force) < Object.north_bound:
             target = Object.north_bound
         else:
