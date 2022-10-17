@@ -1,5 +1,7 @@
-class Character:
+from object import Object
+
+
+class Character(Object):
 
     def __init__(self):
-        pass
-    
+        Object.__init__()
