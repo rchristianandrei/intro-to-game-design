@@ -71,14 +71,14 @@ while playing:
     keys = pygame.key.get_pressed()
 
     # Assign keys
-    objects[0].moving = [
+    objects[0].move = [
         keys[pygame.K_w],
         keys[pygame.K_s],
         keys[pygame.K_a],
         keys[pygame.K_d],
         keys[pygame.K_SPACE],
         keys[pygame.K_e]]
-    objects[1].moving = [
+    objects[1].move = [
         keys[pygame.K_UP],
         keys[pygame.K_DOWN],
         keys[pygame.K_LEFT],
@@ -93,7 +93,7 @@ while playing:
         window.blit(x.active_sprite, (x.x, x.y))
 
     for x in objects:
-        x.move()
+        x.update()
         window.blit(x.active_sprite, (x.x, x.y))
 
     # Update
