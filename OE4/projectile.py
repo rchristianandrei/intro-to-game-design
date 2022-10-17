@@ -5,29 +5,37 @@ class Projectile(Object):
 
     def __int__(self, character, w, h):
 
-        # Spawn projectile
-        y = character.y + character.h / 2
+        self.update()
 
-        if character.flip:
-            x = character.x
-        else:
-            x = character.x + character.w
+        super().__init__(self, self.x, self.y, w, h)
 
-        Object.__init__(self, x, y, w, h)
-
+        self.reference = character
         self.flip = character.flip
-
-        sprites = []
+        self.available = True
+        self.sprites = None
 
     def move(self):
         # Check if projectile is within the frame
-        inside = self.x > Object.west_bound and Object.east_bound(self.x, self.w, Object.width)
+        inside = self.x > Object.west_bound - 10 and Object.east_bound(self.x, self.w, Object.width) + 10
 
         if inside:
             if self.flip:
                 self.x -= Object.speed
             else:
                 self.x += Object.speed
+            self.available = False
         else:
-            del self
+            self.available = True
 
+    def update(self):
+
+        # Update coordinates
+        y = self.reference.y + self.reference.h / 2
+
+        if self.reference.flip:
+            x = self.reference.x
+        else:
+            x = self.reference.x + self.reference.w
+
+        self.x = x
+        self.y = y

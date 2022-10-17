@@ -6,7 +6,7 @@ import copy
 class Character(Object):
 
     def __init__(self, x, y, w, h):
-        Object.__init__(self, x, y, w, h)
+        super().__init__(self, x, y, w, h)
 
         # Movement
         self.jump = False
