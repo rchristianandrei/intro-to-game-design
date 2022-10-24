@@ -1,5 +1,5 @@
 from projectile import Projectile
-from character import Ninja
+from ninja import Ninja
 from animation import Animation
 from object import Object
 import pygame
