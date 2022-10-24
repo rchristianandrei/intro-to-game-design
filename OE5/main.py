@@ -22,6 +22,7 @@ Object.height = height
 clock = pygame.time.Clock()
 
 # Game Objects
+background = pygame.image.load('../images/bg2.png')
 projectiles = [Projectile(width*2, height/2, 80, 16, 10)]
 characters = [Ninja(width/2, height/2, 90, 121, 4, projectiles[0])]
 
@@ -77,7 +78,7 @@ while running:
                             keys[pygame.K_e]]
 
     # Update Display
-    window.fill((0, 0, 0))
+    window.blit(background, (0, -300))
 
     for x in characters:
         x.update()
