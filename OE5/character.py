@@ -1,32 +1,35 @@
-from object import Object
 from animation import Animation
+from object import Object
 import pygame
 import copy
 
 
-class Character(Object):
+class Ninja(Object):
 
     jump_height = -100
 
-    def __init__(self, x, y, w, h, speed):
+    def __init__(self, x, y, w, h, speed, kunai):
 
         # Hotkey
         self.hotkey = None
 
         # Animations
-        self.active_sprite = None
-
         self.IDLE = Animation()
         self.RUN = Animation()
         self.JUMP = Animation()
+        self.THROW = Animation()
 
         # Jump
         self.old_y = None
         self.going_down = False
 
+        # Weapon
+        self.kunai = kunai
+
         # Flags
         self.running = False
         self.jumping = False
+        self.throwing = False
 
         Object.__init__(self, x, y, w, h, speed)
 
@@ -41,6 +44,10 @@ class Character(Object):
         # Check Settings
 
     def movement(self):
+
+        if self.kunai.ready and self.hotkey[5]:
+            self.throwing = True
+            self.kunai.reset_position()
 
         if self.hotkey[4] and not self.jumping:
             self.jumping = True
@@ -78,9 +85,9 @@ class Character(Object):
         if self.old_y is None:
             self.old_y = copy.deepcopy(self.y)
 
-        target = self.old_y + Character.jump_height
+        target = self.old_y + Ninja.jump_height
 
-        if self.old_y + Character.jump_height < Object.offset:
+        if self.old_y + Ninja.jump_height < Object.offset:
             target = Object.offset
 
         if self.y > target and not self.going_down:
@@ -101,8 +108,24 @@ class Character(Object):
             self.JUMP.counter = 0
 
     def animation(self):
+        if self.throwing:
 
-        if self.jumping:
+            # Throw Animation
+            if self.THROW.counter >= len(self.THROW.sprites) - 2:
+                self.throwing = False
+                self.THROW.counter = 0
+
+            self.THROW.update()
+
+            if self.flip:
+                self.active_sprite = pygame.transform.flip(self.THROW.sprites[self.THROW.counter], True, False)
+            else:
+                self.active_sprite = self.THROW.sprites[self.THROW.counter]
+
+            self.w = self.THROW.scale[0]
+            self.h = self.THROW.scale[1]
+
+        elif self.jumping:
 
             # Jump Animation
             self.JUMP.update()

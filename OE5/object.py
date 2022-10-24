@@ -13,6 +13,7 @@ class Object:
         self.h = h
         self.flip = False
         self.speed = speed
+        self.active_sprite = None
 
     def north_boundary(self):
         return self.actual_y() > Object.offset

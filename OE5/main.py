@@ -1,4 +1,5 @@
-from character import Character
+from projectile import Projectile
+from character import Ninja
 from animation import Animation
 from object import Object
 import pygame
@@ -21,24 +22,38 @@ Object.height = height
 clock = pygame.time.Clock()
 
 # Game Objects
-characters = [Character(width/2, height/2, 90, 121, 4)]
+projectiles = [Projectile(width*2, height/2, 80, 16, 10)]
+characters = [Ninja(width/2, height/2, 90, 121, 4, projectiles[0])]
+
 characters[0].IDLE.scale = (77, 146)
 characters[0].IDLE.modulus = 4
 characters[0].RUN.scale = (110, 146)
 characters[0].RUN.modulus = 4
 characters[0].JUMP.scale = (110, 170)
-characters[0].JUMP.modulus = 4
+characters[0].JUMP.modulus = 5
+characters[0].THROW.scale = (130, 150)
+characters[0].THROW.modulus = 4
+
+projectiles[0].set_owner(characters[0])
 
 # Sprites
+projectiles[0].sprite.sprites.append(pygame.image.load('../images/object1/Kunai/Kunai.png'))
+projectiles[0].sprite.sprites = [pygame.transform.rotate(projectiles[0].sprite.sprites[0], -90)]
+
 for x in range(10):
     characters[0].IDLE.sprites.append(pygame.image.load(f'../images/object1/Idle/Idle__00{x}.png'))
     characters[0].RUN.sprites.append(pygame.image.load(f'../images/object1/Run/Run__00{x}.png'))
     characters[0].JUMP.sprites.append(pygame.image.load(f'../images/object1/Jump/Jump__00{x}.png'))
+    characters[0].THROW.sprites.append(pygame.image.load(f'../images/object1/Throw/Throw__00{x}.png'))
 
 for x in characters:
     x.IDLE.resize()
     x.RUN.resize()
     x.JUMP.resize()
+    x.THROW.resize()
+
+for x in projectiles:
+    x.sprite.resize()
 
 # Game Loop
 running = True
@@ -58,12 +73,18 @@ while running:
                             keys[pygame.K_s],
                             keys[pygame.K_a],
                             keys[pygame.K_d],
-                            keys[pygame.K_SPACE]]
+                            keys[pygame.K_SPACE],
+                            keys[pygame.K_e]]
 
     # Update Display
     window.fill((0, 0, 0))
 
     for x in characters:
+        x.update()
+
+        window.blit(x.active_sprite, (x.actual_x(), x.actual_y()))
+
+    for x in projectiles:
         x.update()
 
         window.blit(x.active_sprite, (x.actual_x(), x.actual_y()))
