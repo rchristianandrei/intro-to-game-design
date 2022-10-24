@@ -10,18 +10,7 @@ class Enemy(Object):
     def __init__(self, x, y, w, h, speed):
 
         # Animations
-        self.IDLE = Animation()
         self.RUN = Animation()
-        self.JUMP = Animation()
-        self.THROW = Animation()
-
-        # Jump
-        self.old_y = None
-        self.going_down = False
-
-        # Flags
-        self.running = False
-        self.jumping = False
         self.go_right = True
 
         Object.__init__(self, x, y, w, h, speed)
@@ -43,51 +32,23 @@ class Enemy(Object):
                 self.x += self.speed
             else:
                 self.go_right = False
+                self.flip = True
         else:
             if self.west_boundary():
                 self.x -= self.speed
             else:
                 self.go_right = True
+                self.flip = False
 
     def animation(self):
 
-        if self.jumping:
+        # Run Animation
+        self.RUN.update()
 
-            # Jump Animation
-            self.JUMP.update()
-
-            if self.flip:
-                self.active_sprite = pygame.transform.flip(self.JUMP.sprites[self.JUMP.counter], True, False)
-            else:
-                self.active_sprite = self.JUMP.sprites[self.JUMP.counter]
-
-            self.w = self.JUMP.scale[0]
-            self.h = self.JUMP.scale[1]
-
-        elif self.running:
-
-            # Run Animation
-            self.RUN.update()
-
-            if self.flip:
-                self.active_sprite = pygame.transform.flip(self.RUN.sprites[self.RUN.counter], True, False)
-            else:
-                self.active_sprite = self.RUN.sprites[self.RUN.counter]
-
-            self.w = self.RUN.scale[0]
-            self.h = self.RUN.scale[1]
-            self.IDLE.counter = 0
-
+        if self.flip:
+            self.active_sprite = pygame.transform.flip(self.RUN.sprites[self.RUN.counter], True, False)
         else:
+            self.active_sprite = self.RUN.sprites[self.RUN.counter]
 
-            # Idle Animation
-            self.IDLE.update()
-
-            if self.flip:
-                self.active_sprite = pygame.transform.flip(self.IDLE.sprites[self.IDLE.counter], True, False)
-            else:
-                self.active_sprite = self.IDLE.sprites[self.IDLE.counter]
-
-            self.w = self.IDLE.scale[0]
-            self.h = self.IDLE.scale[1]
-            self.RUN.counter = 0
+        self.w = self.RUN.scale[0]
+        self.h = self.RUN.scale[1]
