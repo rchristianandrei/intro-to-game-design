@@ -25,9 +25,13 @@ clock = pygame.time.Clock()
 # Game Objects
 background = pygame.image.load('../images/bg2.png')
 
-projectiles = [Projectile(width*2, height/2, 80, 16, 10)]
-characters = [Ninja(width/2, height/2, 90, 121, 4, projectiles[0])]
-enemies = [Enemy(width/2, height - 200, 227, 157, 2)]
+game_objects = [Projectile(width*2, height/2, 80, 16, 10),
+                Ninja(width/2, height/2, 90, 121, 4),
+                Enemy(width/2, height - 200, 227, 157, 2)]
+
+projectiles = [game_objects[0]]
+characters = [game_objects[1]]
+enemies = [game_objects[2]]
 
 characters[0].IDLE.scale = (77, 146)
 characters[0].IDLE.modulus = 4
@@ -37,6 +41,7 @@ characters[0].JUMP.scale = (110, 170)
 characters[0].JUMP.modulus = 5
 characters[0].THROW.scale = (130, 150)
 characters[0].THROW.modulus = 4
+characters[0].kunai = projectiles[0]
 
 enemies[0].RUN.scale = (227, 157)
 enemies[0].RUN.modulus = 4
@@ -112,14 +117,12 @@ while running:
         window.blit(x.active_sprite, (x.actual_x(), x.actual_y()))
         pygame.draw.rect(window, (0, 255, 0), x.rect, 6, 1)
 
-    point = pygame.mouse.get_pos()
-
     # Collision Detection
-    for obj in characters:
-        collide = obj.rect.collidepoint(point)
+    for x in projectiles:
+        x.detect_collision(game_objects)
 
-        if collide:
-            print("It is working!")
+    for x in enemies:
+        x.detect_collision(game_objects)
 
     pygame.display.update()
     clock.tick(60)

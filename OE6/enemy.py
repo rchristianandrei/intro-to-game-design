@@ -1,5 +1,6 @@
 from animation import Animation
 from object import Object
+from ninja import Ninja
 import pygame
 
 
@@ -52,3 +53,9 @@ class Enemy(Object):
 
         self.w = self.RUN.scale[0]
         self.h = self.RUN.scale[1]
+
+    def detect_collision(self, game_objects):
+
+        for x in game_objects:
+            if self.rect.colliderect(x) and isinstance(x, Ninja):
+                print(f"This Enemy collided with {x}")

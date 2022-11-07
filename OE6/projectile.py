@@ -44,3 +44,8 @@ class Projectile(Object):
 
     def set_owner(self, owner):
         self.owner = owner
+
+    def detect_collision(self, game_objects):
+        for x in game_objects:
+            if self.rect.colliderect(x) and (not self == x and not self.owner == x):
+                print(f"This projectile collided with {x}")

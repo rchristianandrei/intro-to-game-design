@@ -8,7 +8,7 @@ class Ninja(Object):
 
     jump_height = -100
 
-    def __init__(self, x, y, w, h, speed, kunai):
+    def __init__(self, x, y, w, h, speed):
 
         # Hotkey
         self.hotkey = None
@@ -24,7 +24,7 @@ class Ninja(Object):
         self.going_down = False
 
         # Weapon
-        self.kunai = kunai
+        self.kunai = None
 
         # Flags
         self.running = False
