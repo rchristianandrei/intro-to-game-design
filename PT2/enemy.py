@@ -73,14 +73,18 @@ class Enemy(Collider):
 
         self.health_rect = pygame.Rect(self.x-self.health_bar_w/2, self.y-self.h/2, self.health_bar_w, 10)
 
-    def dead(self):
+    def dead(self) -> bool:
         if not self.state == self.DEAD:
             self.health -= 1
             self.health_bar_w -= self.health_percentage
 
+        print(self.health)
+
         if self.health <= 0:
             self.active_collision = False
             self.state = self.DEAD
+            return True
+        return False
 
     def on_collide(self, obj: Ninja):
         if self.state == self.DEAD:

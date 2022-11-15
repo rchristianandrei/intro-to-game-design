@@ -38,9 +38,11 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
+    # Reset
     if pygame.key.get_pressed()[pygame.K_r]:
         Settings.RUNNING = True
         Settings.TIME_ENDED = None
+        Settings.SCORE = 0
 
         for obj in Settings.GAMEOBJECTS.values():
             if obj.tag == 'Enemy':
@@ -49,6 +51,7 @@ while running:
         Settings.TIME_Start = pygame.time.get_ticks() / 1000
         Settings.GAMEOBJECTS.get(ninja).reset()
         score_UI.change_surface('')
+        UI.canvas.get('Kills').change_surface(f'Score {Settings.SCORE}')
 
     # Update game objects
     window.blit(background_image, (0, -300))

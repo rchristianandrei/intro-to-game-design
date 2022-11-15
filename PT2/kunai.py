@@ -3,6 +3,7 @@ import pygame.image
 from animator import Animation, Animator
 from settings import Settings
 from collider import Collider
+from interface import UI
 
 
 class Kunai(Collider):
@@ -16,6 +17,10 @@ class Kunai(Collider):
         self.speed = 10
         self.duration = 8
         self.last_shown = None
+
+        self.score = 'Kills'
+        UI.canvas.update({self.score: UI(self.score, Settings.WIDTH - 200, 100)})
+        UI.canvas.get(self.score).change_surface(f'Score {Settings.SCORE}')
 
         # Animation
         self.animator = Animator(self)
@@ -61,5 +66,8 @@ class Kunai(Collider):
 
         if obj.tag == 'Enemy' and obj.active_collision:
             # Kill the enemy
-            obj.dead()
             self.y = -self.h
+
+            if obj.dead():
+                Settings.SCORE += 1
+                UI.canvas.get(self.score).change_surface(f'Score {Settings.SCORE}')

@@ -7,6 +7,8 @@ class Settings:
 
     GAMEOBJECTS = {}
 
+    SCORE = 0
+
     RUNNING = True
     GAME_OVER = False
     TIME_Start = 0
