@@ -85,6 +85,7 @@ class Enemy(Collider):
             return
 
         self.state = self.ATTACK
+        Settings.HIT_SOUND.play()
         obj.dead()
 
     def reset(self, flip, x):
