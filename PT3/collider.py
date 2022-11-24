@@ -1,5 +1,3 @@
-import setuptools.msvc
-
 from settings import Settings
 from object import Object
 import pygame
