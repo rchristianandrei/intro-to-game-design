@@ -1,5 +1,6 @@
 class Settings:
 
+    player_name = 'Ninja_0'
     TITLE = 'Ninja Hustle'
     WIDTH = 1400
     HEIGHT = 700
@@ -14,8 +15,10 @@ class Settings:
     TIME_ENDED = None
 
     # SFX
+    VOLUME = 0.2
     HIT_SOUND = None
     DEATH_SOUND = None
+    BIRD_SOUND = None
 
     # UI
     WIN = "YOU WIN!"

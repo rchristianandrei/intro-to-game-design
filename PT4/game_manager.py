@@ -1,6 +1,7 @@
 from animator import Animator, Animation
 from settings import Settings
 from enemy import Enemy
+from bird import Bird
 import pygame
 import random
 
@@ -9,11 +10,12 @@ class GameManager:
 
     def __init__(self):
         self.level = 0
-        self.enemies = [2, 3, 5]
+        self.final_level = 2
+        self.bird_index = 0
 
     def spawn_enemies(self):
         name = 'Enemy_'
-        for i in range(self.enemies[self.level]):
+        for i in range(self.level):
             speed = random.randrange(1, 5)
             rand = random.randint(0, 1)
             pos = random.choice([True, False])
@@ -27,6 +29,21 @@ class GameManager:
                 Settings.GAMEOBJECTS.get(new).x = 0
 
             Settings.GAMEOBJECTS.get(new).speed = speed
+
+    def spawn_bird(self):
+        if self.level % 2 == 0 and self.level > 0:
+            return
+
+        bird = Bird()
+
+        if random.choice([True, False]):
+            bird.flip = True
+            bird.x = Settings.WIDTH
+        else:
+            bird.x = 0
+
+        Settings.GAMEOBJECTS.update({'bird_'+str(self.bird_index): bird})
+        self.bird_index += 1
 
     def check_if_win(self):
         if not Settings.RUNNING:
@@ -42,13 +59,14 @@ class GameManager:
                 enemies += 1
 
         if enemies == 0:
-            if self.level == len(self.enemies)-1:
+            if self.level == self.final_level:
                 # You won
                 Settings.MESSAGE = Settings.WIN
                 Settings.RUNNING = False
             else:
                 self.level += 1
                 Settings.RUNNING = True
+                self.spawn_bird()
                 self.spawn_enemies()
 
     @staticmethod

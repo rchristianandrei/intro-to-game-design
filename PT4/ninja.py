@@ -173,8 +173,8 @@ class Ninja(Collider):
                 self.state = self.THROW
                 return ammo
 
-    def dead(self):
-        self.health.decrease_hp(1)
+    def dead(self, damage: float):
+        self.health.decrease_hp(damage)
 
         if self.health.get_hp() <= 0:
             self.state = self.DEAD

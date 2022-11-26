@@ -20,19 +20,21 @@ pygame.display.set_caption(Settings.TITLE)
 bg_music = pygame.mixer.Sound('../music/suspense.mp3')
 Settings.DEATH_SOUND = pygame.mixer.Sound('../music/death.mp3')
 Settings.HIT_SOUND = pygame.mixer.Sound('../music/stab.mp3')
+Settings.BIRD_SOUND = pygame.mixer.Sound('../music/bird.mp3')
 
-Settings.HIT_SOUND.set_volume(0.05)
-Settings.DEATH_SOUND.set_volume(0.05)
-bg_music.set_volume(0.05)
+Settings.HIT_SOUND.set_volume(Settings.VOLUME)
+Settings.DEATH_SOUND.set_volume(Settings.VOLUME)
+Settings.BIRD_SOUND.set_volume(Settings.VOLUME)
+bg_music.set_volume(Settings.VOLUME)
 bg_music.play(-1)
+
+# Objects
+ninja = Settings.player_name
+Settings.GAMEOBJECTS.update({ninja: Ninja(ninja)})
 
 # Game Manager
 manager = GameManager()
-manager.spawn_enemies()
-
-# Objects
-ninja = 'Ninja_0'
-Settings.GAMEOBJECTS.update({ninja: Ninja(ninja)})
+manager.check_if_win()
 
 background_image = pygame.image.load('../images/bg2.png')
 kunai_icon = pygame.transform.scale(pygame.image.load('../images/object1/Kunai/Kunai.png'), (32, 160))
