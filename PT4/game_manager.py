@@ -10,7 +10,7 @@ class GameManager:
 
     def __init__(self):
         self.level = 0
-        self.final_level = 2
+        self.final_level = 5
         self.bird_index = 0
 
     def spawn_enemies(self):
@@ -31,7 +31,7 @@ class GameManager:
             Settings.GAMEOBJECTS.get(new).speed = speed
 
     def spawn_bird(self):
-        if self.level % 2 == 0 and self.level > 0:
+        if not self.level % 2 == 0:
             return
 
         bird = Bird()
@@ -41,6 +41,8 @@ class GameManager:
             bird.x = Settings.WIDTH
         else:
             bird.x = 0
+
+        bird.speed = random.randrange(1,3)
 
         Settings.GAMEOBJECTS.update({'bird_'+str(self.bird_index): bird})
         self.bird_index += 1

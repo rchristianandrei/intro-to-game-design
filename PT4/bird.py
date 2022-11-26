@@ -12,7 +12,7 @@ class Bird(Collider):
         player = Settings.GAMEOBJECTS.get(Settings.player_name)
 
         self.y = player.y + player.jump_force
-        self.speed = 10
+        self.speed = 5
         self.animator = Animator()
 
         # Animation

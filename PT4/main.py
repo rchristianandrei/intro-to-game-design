@@ -1,6 +1,7 @@
 from game_manager import GameManager
 from animator import Animator
 from settings import Settings
+from buff import BuffManager
 from interface import UI
 from ninja import Ninja
 from enemy import Enemy
@@ -34,6 +35,7 @@ Settings.GAMEOBJECTS.update({ninja: Ninja(ninja)})
 
 # Game Manager
 manager = GameManager()
+buff_manager = BuffManager()
 manager.check_if_win()
 
 background_image = pygame.image.load('../images/bg2.png')
@@ -77,6 +79,7 @@ while running:
 
     # Game Manager
     manager.check_if_win()
+    buff_manager.update()
 
     # Update counter for animation
     if Animator.counter < Animator.limit:

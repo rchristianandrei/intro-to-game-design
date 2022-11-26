@@ -8,7 +8,7 @@ class Health:
     def __init__(self, obj: Object, health: float):
         self.MAX_HP = self.health = health
         self.offset = 0
-        self.width = 50
+        self.MAX_WIDTH = self.width = 50
         self.height = 10
         self.health_percent = self.width / self.health
         self.GREEN = self.color = (0, 255, 0)
@@ -18,17 +18,23 @@ class Health:
         self.rect = None
 
     def get_hp(self):
-
         return self.health
 
     def decrease_hp(self, amount: float):
         self.health -= amount
-        self.width -= self.health_percent * amount
+
+        if self.width <= self.MAX_WIDTH:
+            self.width -= self.health_percent * amount
+
+            if self.width > self.MAX_WIDTH:
+                self.width = self.MAX_WIDTH
 
         if self.health <= self.MAX_HP * (1/3):
             self.color = self.RED
         elif self.health <= self.MAX_HP * (2/3):
             self.color = self.ORANGE
+        else:
+            self.color = self.GREEN
 
     def reset(self):
         self.health = self.MAX_HP
