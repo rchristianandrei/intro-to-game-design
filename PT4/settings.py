@@ -19,6 +19,7 @@ class Settings:
     HIT_SOUND = None
     DEATH_SOUND = None
     BIRD_SOUND = None
+    HP_SOUND = None
 
     # UI
     WIN = "YOU WIN!"

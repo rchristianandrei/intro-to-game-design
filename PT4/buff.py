@@ -48,6 +48,8 @@ class Buff(Collider):
             if hp.get_hp() > hp.MAX_HP:
                 hp.health = hp.MAX_HP
 
+            Settings.HP_SOUND.play()
+
         self.active = False
 
 

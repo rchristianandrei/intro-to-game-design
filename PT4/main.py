@@ -22,10 +22,12 @@ bg_music = pygame.mixer.Sound('../music/suspense.mp3')
 Settings.DEATH_SOUND = pygame.mixer.Sound('../music/death.mp3')
 Settings.HIT_SOUND = pygame.mixer.Sound('../music/stab.mp3')
 Settings.BIRD_SOUND = pygame.mixer.Sound('../music/bird.mp3')
+Settings.HP_SOUND = pygame.mixer.Sound('../music/hp_up.mp3')
 
 Settings.HIT_SOUND.set_volume(Settings.VOLUME)
 Settings.DEATH_SOUND.set_volume(Settings.VOLUME)
 Settings.BIRD_SOUND.set_volume(Settings.VOLUME)
+Settings.HP_SOUND.set_volume(Settings.VOLUME)
 bg_music.set_volume(Settings.VOLUME)
 bg_music.play(-1)
 
