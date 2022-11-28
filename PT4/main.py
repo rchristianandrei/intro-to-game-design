@@ -48,19 +48,9 @@ score = 'Score'
 UI.canvas.update({score: UI(score, Settings.WIDTH//2, Settings.HEIGHT//2)})
 score_UI = UI.canvas.get(score)
 
-running = True
-while running:
-    # Set FPS
-    clock.tick(Settings.FPS)
 
-    # Check for events
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-    # Update game objects
-    window.blit(background_image, (0, -300))
-
+def main_gameplay():
+    # Game objects
     for obj in Settings.GAMEOBJECTS.values():
         if not obj.active:
             continue
@@ -76,9 +66,6 @@ while running:
         window.blit(ui.rect, (ui.actual_x(), ui.actual_y()))
     window.blit(kunai_icon, icon_location)
 
-    if not Settings.RUNNING:
-        score_UI.change_surface(Settings.MESSAGE)
-
     # Game Manager
     manager.check_if_win()
     buff_manager.update()
@@ -88,6 +75,30 @@ while running:
         Animator.counter += 1
     else:
         Animator.counter = 0
+
+
+def post_gameplay():
+    score_UI.change_surface(Settings.MESSAGE)
+
+
+running = True
+while running:
+    # Set FPS
+    clock.tick(Settings.FPS)
+
+    # Check for events
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Update game objects
+    window.blit(background_image, (0, -300))
+
+    if Settings.PLAYING:
+        main_gameplay()
+
+        if not Settings.RUNNING:
+            post_gameplay()
 
     pygame.display.update()
 

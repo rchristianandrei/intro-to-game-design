@@ -10,6 +10,7 @@ class Settings:
     GAMEOBJECTS = {}
     SCORE = 0
 
+    PLAYING = False
     RUNNING = True
     TIME_Start = 0
     TIME_ENDED = None
