@@ -2,15 +2,15 @@ from object import Object
 
 
 class UI(Object):
-
+    menu = {}
     canvas = {}
     font = None
 
-    def __init__(self, name, x, y):
+    def __init__(self, name, x, y, text=''):
         super().__init__()
 
         self.name = name
-        self.surface = ''
+        self.surface = text
         self.rect = None
         self.x = x
         self.y = y
@@ -19,7 +19,7 @@ class UI(Object):
         UI.canvas.update({self.name: self})
 
     def update(self):
-        self.rect = UI.font.render(self.surface, True, (255, 255, 255))
+        self.rect = UI.font.render(self.surface, self.active, (255, 255, 255))
 
         self.w = self.rect.get_width()
         self.h = self.rect.get_height()

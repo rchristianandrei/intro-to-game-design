@@ -2,6 +2,7 @@ class Settings:
 
     player_name = 'Ninja_0'
     TITLE = 'Ninja Hustle'
+    INSTRUCTION = 'Press P to play'
     WIDTH = 1400
     HEIGHT = 700
     OFFSET = 10

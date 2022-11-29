@@ -44,9 +44,30 @@ background_image = pygame.image.load('../images/bg2.png')
 kunai_icon = pygame.transform.scale(pygame.image.load('../images/object1/Kunai/Kunai.png'), (32, 160))
 icon_location = (20, 10)
 
+# UI
 score = 'Score'
+
 UI.canvas.update({score: UI(score, Settings.WIDTH//2, Settings.HEIGHT//2)})
 score_UI = UI.canvas.get(score)
+
+title = Settings.TITLE
+UI.menu.update({title: UI(title, Settings.WIDTH//2, Settings.HEIGHT//2, title)})
+
+instruction = Settings.INSTRUCTION
+UI.menu.update({instruction: UI(title, Settings.WIDTH//2, Settings.HEIGHT//3, instruction)})
+
+
+def menu(keys):
+    # UI
+    for ui in UI.menu.values():
+        ui.update()
+        window.blit(ui.rect, (ui.actual_x(), ui.actual_y()))
+
+    if keys[pygame.K_p]:
+        Settings.PLAYING = True
+
+        for ui in UI.menu.values():
+            ui.surface = ''
 
 
 def main_gameplay():
@@ -77,8 +98,13 @@ def main_gameplay():
         Animator.counter = 0
 
 
-def post_gameplay():
+def post_gameplay(keys):
+    global running
+
     score_UI.change_surface(Settings.MESSAGE)
+
+    if keys[pygame.K_SPACE]:
+        running = False
 
 
 running = True
@@ -94,11 +120,15 @@ while running:
     # Update game objects
     window.blit(background_image, (0, -300))
 
-    if Settings.PLAYING:
+    keys = pygame.key.get_pressed()
+
+    if not Settings.PLAYING:
+        menu(keys)
+    else:
         main_gameplay()
 
         if not Settings.RUNNING:
-            post_gameplay()
+            post_gameplay(keys)
 
     pygame.display.update()
 
