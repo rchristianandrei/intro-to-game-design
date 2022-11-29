@@ -1,6 +1,7 @@
 from animator import Animator, Animation
 from collider import Collider
 from settings import Settings
+from object import Object
 import pygame
 
 
@@ -11,7 +12,7 @@ class Bird(Collider):
 
         player = Settings.GAMEOBJECTS.get(Settings.player_name)
 
-        self.y = player.y + player.jump_force
+        self.y = Object.ground + player.jump_force
         self.speed = 5
         self.animator = Animator()
 

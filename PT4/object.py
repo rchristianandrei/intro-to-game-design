@@ -3,9 +3,11 @@ from settings import Settings
 
 class Object:
 
+    ground = Settings.HEIGHT - 100
+
     def __init__(self):
         self.x: float = Settings.WIDTH / 2
-        self.y: float = Settings.HEIGHT - 100
+        self.y: float = Object.ground
         self.w: float = 0
         self.h: float = 0
         self.flip: bool = False
