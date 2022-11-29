@@ -51,10 +51,10 @@ UI.canvas.update({score: UI(score, Settings.WIDTH//2, Settings.HEIGHT//2)})
 score_UI = UI.canvas.get(score)
 
 title = Settings.TITLE
-UI.menu.update({title: UI(title, Settings.WIDTH//2, Settings.HEIGHT//2, title)})
+UI.menu.update({title: UI(title, Settings.WIDTH//2, Settings.HEIGHT//3, title)})
 
 instruction = Settings.INSTRUCTION
-UI.menu.update({instruction: UI(title, Settings.WIDTH//2, Settings.HEIGHT//3, instruction)})
+UI.menu.update({instruction: UI(title, Settings.WIDTH//2, Settings.HEIGHT//2, instruction)})
 
 
 def menu(keys):
