@@ -40,9 +40,15 @@ manager = GameManager()
 buff_manager = BuffManager()
 manager.check_if_win()
 
-background_image = pygame.image.load('../images/bg2.png')
-kunai_icon = pygame.transform.scale(pygame.image.load('../images/object1/Kunai/Kunai.png'), (32, 160))
+load = pygame.image.load
+
+background_image = load('../images/bg2.png')
+kunai_icon = pygame.transform.scale(load('../images/object1/Kunai/Kunai.png'), (32, 160))
 icon_location = (20, 10)
+
+arrow_image = pygame.transform.scale(load('../images/arrow-down.png'), (113, 113))
+arrow_duration = 3
+arrow_mark = None
 
 # UI
 score = 'Score'
@@ -80,6 +86,14 @@ def main_gameplay():
 
         if isinstance(obj, Enemy) or isinstance(obj, Ninja):
             pygame.draw.rect(window, obj.health.color, obj.health.rect)
+
+        if isinstance(obj, Ninja):
+            global arrow_mark
+            if arrow_mark is None:
+                arrow_mark = pygame.time.get_ticks() / 1000
+
+            if pygame.time.get_ticks() / 1000 - arrow_mark < arrow_duration:
+                window.blit(arrow_image, (obj.actual_x(), obj.actual_y() - 150))
 
     # UI
     for ui in UI.canvas.values():
