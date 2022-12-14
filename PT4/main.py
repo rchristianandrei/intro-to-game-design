@@ -56,7 +56,7 @@ background_image = load('../images/bg2.png')
 kunai_icon = pygame.transform.scale(load('../images/object1/Kunai/Kunai.png'), (32, 160))
 icon_location = (20, 10)
 
-arrow_image = pygame.transform.scale(load('../images/arrow-down.png'), (113, 113))
+arrow_image = pygame.transform.scale(load('../images/arrow-down.png'), (75, 75))
 arrow_duration = 3
 arrow_mark = None
 
