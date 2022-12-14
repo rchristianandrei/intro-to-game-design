@@ -18,16 +18,26 @@ UI.font = pygame.font.SysFont('arial', 50)
 pygame.display.set_caption(Settings.TITLE)
 
 # Sounds
-bg_music = pygame.mixer.Sound('../music/suspense.mp3')
-Settings.DEATH_SOUND = pygame.mixer.Sound('../music/death.mp3')
-Settings.HIT_SOUND = pygame.mixer.Sound('../music/stab.mp3')
-Settings.BIRD_SOUND = pygame.mixer.Sound('../music/bird.mp3')
-Settings.HP_SOUND = pygame.mixer.Sound('../music/hp_up.mp3')
+sound = pygame.mixer.Sound
+
+bg_music = sound('../music/suspense.mp3')
+Settings.DEATH_SOUND = sound('../music/death.mp3')
+Settings.HIT_SOUND = sound('../music/stab.mp3')
+Settings.BIRD_SOUND = sound('../music/bird.mp3')
+Settings.HP_SOUND = sound('../music/hp_up.mp3')
+Settings.WALK_SOUND = sound('../music/walking-sfx.mp3')
+Settings.JUMP_SOUND = sound('../music/jump-sfx.mp3')
+Settings.WIN_SOUND = sound('../music/win-sfx.mp3')
+Settings.LOSE_SOUND = sound('../music/lose-sfx.mp3')
 
 Settings.HIT_SOUND.set_volume(Settings.VOLUME)
 Settings.DEATH_SOUND.set_volume(Settings.VOLUME)
 Settings.BIRD_SOUND.set_volume(Settings.VOLUME)
 Settings.HP_SOUND.set_volume(Settings.VOLUME)
+Settings.WALK_SOUND.set_volume(Settings.VOLUME + 0.2)
+Settings.JUMP_SOUND.set_volume(Settings.VOLUME)
+Settings.WIN_SOUND.set_volume(Settings.VOLUME + 0.2)
+Settings.LOSE_SOUND.set_volume(Settings.VOLUME + 0.2)
 bg_music.set_volume(Settings.VOLUME)
 bg_music.play(-1)
 

@@ -63,6 +63,7 @@ class GameManager:
         if enemies == 0:
             if self.level == self.final_level:
                 # You won
+                Settings.WIN_SOUND.play()
                 Settings.MESSAGE = Settings.WIN
                 Settings.RUNNING = False
             else:

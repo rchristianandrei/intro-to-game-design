@@ -85,6 +85,7 @@ class Ninja(Collider):
         self.jumping = False
         self.old_y = None
         self.going_down = False
+        self.walk_sfx = False
 
     def update(self):
         super().update()
@@ -113,6 +114,7 @@ class Ninja(Collider):
             # JUMP
             elif keys[self.JUMP_KEY] and not self.state == self.THROW and not self.jumping:
                 self.jumping = True
+                Settings.JUMP_SOUND.play()
 
         if self.jumping:
             self.do_jump()
@@ -128,9 +130,19 @@ class Ninja(Collider):
                     self.flip = False
 
                 self.state = self.RUN
+
+                if not self.walk_sfx and not self.jumping:
+                    self.walk_sfx = True
+                    Settings.WALK_SOUND.play(-1)
+                elif self.jumping:
+                    self.walk_sfx = False
+                    Settings.WALK_SOUND.stop()
+
                 return
 
             self.state = self.IDLE
+            self.walk_sfx = False
+            Settings.WALK_SOUND.stop()
 
     def animation(self):
 
@@ -180,8 +192,10 @@ class Ninja(Collider):
             self.state = self.DEAD
 
             if Settings.RUNNING:
+                Settings.WALK_SOUND.stop()
                 Settings.DEATH_SOUND.play()
 
+            Settings.LOSE_SOUND.play()
             Settings.MESSAGE = Settings.LOSE
             Settings.RUNNING = False
 
